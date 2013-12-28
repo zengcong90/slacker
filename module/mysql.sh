@@ -57,6 +57,8 @@ else
     kill -9 $$
 fi
 
+ln -s /opt/lnmp/bin/mysql/lib/libmysqlclient.18.1.0 /usr/lib/libmysqlclient.18.1.0
+
 useradd -M -s /sbin/nologin mysql
 chown -R mysql:mysql $INSTALL_PATH/bin/mysql $INSTALL_PATH/data/mysql $INSTALL_PATH/logs/mysql
 
@@ -170,7 +172,7 @@ fi
 $INSTALL_PATH/bin/mysql/scripts/mysql_install_db --user=mysql --basedir=$INSTALL_PATH/bin/mysql --datadir=$INSTALL_PATH/data/mysql
 chown mysql.mysql -R $INSTALL_PATH/data/mysql
 service mysql start
-export PATH=$PATH:$INSTALL_PATH/bin/mysql/bin
+
 echo "export PATH=\$PATH:$INSTALL_PATH/bin/mysql/bin" >> /etc/profile
 . /etc/profile
 

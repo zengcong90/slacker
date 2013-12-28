@@ -41,7 +41,7 @@ nameserver 114.114.114.114
 nameserver 8.8.8.8
 EOF
 
-#service network restart
+service network restart
 
 # Definition Directory
 mkdir -p $INSTALL_PATH/backup \
