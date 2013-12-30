@@ -13,6 +13,7 @@ IN_PWD=$(pwd)
 export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 clear
 
+. $IN_PWD/VERSION.conf
 . $IN_PWD/GLOBAL.conf
 . $IN_PWD/utils/helper.sh
 . $IN_PWD/utils/installer.sh
