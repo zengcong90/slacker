@@ -54,9 +54,9 @@ fi
 # PHP
 if [ -s "$IN_PWD/module/php.sh" ];then
     . $IN_PWD/module/php.sh
-    # Install_PHPNeeds 2>&1 | tee -a $INSTALL_PATH/install.log
-    # Install_PHP 2>&1 | tee -a $INSTALL_PATH/install.log
-    Install_PHPExtends 2>&1 | tee -a $INSTALL_PATH/install.log
+    Install_PHPNeeds 2>&1 | tee -a $INSTALL_PATH/install.log
+    Install_PHP 2>&1 | tee -a $INSTALL_PATH/install.log
+    # Install_PHPExtends 2>&1 | tee -a $INSTALL_PATH/install.log
     # /bin/mv $IN_PWD/module/php.sh $IN_PWD/module/php.ed
 fi
 

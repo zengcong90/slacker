@@ -17,7 +17,7 @@ printf "
 . $IN_PWD/options.conf
 . $IN_PWD/func/downloader.sh
 
-cd $IN_PWD/src/
+cd $INSTALL_PATH/src/
 Download_To_Src "http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz" \
     "http://downloads.sourceforge.net/project/mcrypt/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.gz" \
     "http://downloads.sourceforge.net/project/mhash/mhash/0.9.9.9/mhash-0.9.9.9.tar.gz" \
@@ -25,12 +25,14 @@ Download_To_Src "http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz" \
 
 tar xzf libiconv-1.14.tar.gz
 cd libiconv-1.14
+make clean
 ./configure --prefix=/usr/local
 make && make install
 cd ../
 
 tar xzf libmcrypt-2.5.8.tar.gz
 cd libmcrypt-2.5.8
+make clean
 ./configure
 make && make install
 ldconfig
@@ -41,6 +43,7 @@ cd ../../
 
 tar xzf mhash-0.9.9.9.tar.gz
 cd mhash-0.9.9.9
+make clean
 ./configure
 make && make install
 cd ../
@@ -61,6 +64,7 @@ OS_command
 
 tar xzf mcrypt-2.6.8.tar.gz
 cd mcrypt-2.6.8
+make clean
 ldconfig
 ./configure
 make && make install
@@ -87,7 +91,7 @@ printf "
 . $IN_PWD/options.conf
 . $IN_PWD/func/downloader.sh
 
-cd $IN_PWD/src/
+cd $INSTALL_PATH/src/
 Download_To_Src "http://www.php.net/get/php-5.5.7.tar.gz/from/this/mirror"
 tar xzf php-5.5.7.tar.gz
 
@@ -203,8 +207,8 @@ printf "
 # Memcached
 if [ -s "$IN_PWD/module/memcached.sh" ];then
     . $IN_PWD/module/memcached.sh
-    Install_LibMemcached 2>&1 | tee -a $INSTALL_PATH/install.log
-    Install_Memcached 2>&1 | tee -a $INSTALL_PATH/install.log
+    Install_MemcachedService 2>&1 | tee -a $INSTALL_PATH/install.log
+    Install_MemcachedExtends 2>&1 | tee -a $INSTALL_PATH/install.log
     /bin/mv $IN_PWD/module/memcached.sh $IN_PWD/module/memcached.ed
 fi
 
