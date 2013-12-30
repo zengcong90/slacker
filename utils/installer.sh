@@ -15,6 +15,7 @@ install_mod()
 {
     if [ -d "$MOD_PWD/$1" ]; then
         if [ ! -s "$MOD_PWD/$1/$2/install.lock" ]; then
+            chmod +x $MOD_PWD/$1/$2/install.sh
             . $MOD_PWD/$1/$2/install.sh
             # @TODO Determine if there is a file directory
             if [ -d "$MOD_PWD/$1/$2/src/" ];then
@@ -31,6 +32,7 @@ install_mod()
 install_shell()
 {
     if [ -s "$1" ];then
+        chmod +x $1
         . $1 2>&1 | tee -a $INSTALL_PATH/install.log
         /bin/mv $1{,_lock}
     fi
@@ -42,6 +44,7 @@ install_php_extend()
 {
     if [ -d "$EXT_PWD/$1" ]; then
         if [ ! -s "$EXT_PWD/$1/install.lock" ]; then
+            chmod +x $EXT_PWD/$1/install.sh
             . $EXT_PWD/$1/install.sh
             # @TODO Determine if there is a file directory
             if [ -d "$EXT_PWD/$1/src/" ];then
@@ -59,6 +62,7 @@ install_php_library()
 {
     if [ -d "$LIB_PWD/$1" ]; then
         if [ ! -s "$LIB_PWD/$1/install.lock" ]; then
+            chmod +x $LIB_PWD/$1/install.sh
             . $LIB_PWD/$1/install.sh
             # @TODO Determine if there is a file directory
             if [ -d "$LIB_PWD/$1/src/" ];then

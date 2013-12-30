@@ -6,14 +6,6 @@
 # Website:  http://movoin.com
 #
 
-# Set DNS
-cat > /etc/resolv.conf << EOF
-nameserver 114.114.114.114
-nameserver 8.8.8.8
-EOF
-
-service network restart
-
 # yum.repo
 yum clean all
 
@@ -141,6 +133,14 @@ fi
 # closed Unnecessary services and remove obsolete rpm package
 for Service in `chkconfig --list | grep 3:on | awk '{print $1}'`;do chkconfig --level 3 $Service off;done
 for Service in sshd network crond iptables irqbalance syslog rsyslog sendmail;do chkconfig --level 3 $Service on;done
+
+# Set DNS
+cat > /etc/resolv.conf << EOF
+nameserver 114.114.114.114
+nameserver 8.8.8.8
+EOF
+
+service network restart
 
 # Close SELINUX
 setenforce 0
