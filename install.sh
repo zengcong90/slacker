@@ -79,43 +79,63 @@ if [ ! $MOD_PHP == '' ] && [ ! $MOD_PHP_VER == '' ];then
 fi
 
 
+# Memcached Server
+if [ ! $MOD_MEMCACHED == '' ] && [ ! $MOD_MEMCACHED_VER == '' ];then
+    install_mod $MOD_MEMCACHED $MOD_MEMCACHED_VER
+fi
+
+
 # PHP Extensions
 
 # - imagick
 if [ $EXT_IMAGICK_INSTALL == 'y' ];then
-    install_php_extend 'imagick'
+    install_phpext 'imagick'
 fi
 
 # - memcached
 if [ $EXT_MEMCACHED_INSTALL == 'y' ];then
-    install_php_extend 'memcached'
+    install_phpext 'memcached'
 fi
 
 # - hidef
 if [ $EXT_HIDEF_INSTALL == 'y' ];then
-    install_php_extend 'hidef'
+    install_phpext 'hidef'
 fi
 
 # - pecl_http
 if [ $EXT_PECL_HTTP_INSTALL == 'y' ];then
-    install_php_extend 'pecl_http'
+    install_phpext 'pecl_http'
 fi
 
 # - xdebug
 if [ $EXT_XDEBUG_INSTALL == 'y' ];then
-    install_php_extend 'xdebug'
+    install_phpext 'xdebug'
 fi
 
 # - pthreads
 if [ $EXT_PTHREADS_INSTALL == 'y' ];then
-    install_php_extend 'pthreads'
+    install_phpext 'pthreads'
 fi
 
 
 # PHP Libraries
 if [ $LIB_PHPMYADMIN_INSTALL == 'y' ];then
-    install_php_library 'phpmyadmin'
+    install_phplib 'phpmyadmin'
 fi
 
 # Show Install Success Infomations
 cat $INSTALL_PATH/install.info
+
+# Reboot OS
+while :
+do
+    echo
+    echo -e "\033[31mPlease restart the server and see if the services start up fine.\033[0m"
+    read -p "Do you want to restart OS ? [y/n]: " IS_RESTART_OS
+    if [ "$IS_RESTART_OS" != 'y' -a "$IS_RESTART_OS" != 'n' ];then
+        echo -e "\033[31minput error! Please only input 'y' or 'n'\033[0m"
+    else
+        break
+    fi
+done
+[ "$IS_RESTART_OS" == 'y' ] && reboot

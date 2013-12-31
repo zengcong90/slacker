@@ -220,7 +220,7 @@ Created: `date`
 -------------------------
 
 
-    " > $INSTALL_PATH/install.info
+    " >> $INSTALL_PATH/install.info
 
     # ============================
 }

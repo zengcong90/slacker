@@ -79,4 +79,27 @@ endscript
 
     ldconfig
     service nginx start
+
+    # ============================
+
+    printf "
+
+Nginx Install Information
+=========================
+
+Nginx Version: $MOD_WEB_VER
+
+Nginx Install Path: $MOD_WEB_INSTALL_PATH
+Nginx Log Path: $MOD_WEB_LOG_PATH
+
+Usage: service nginx {start|stop|force-quit|restart|reload|status}
+
+Created: `date`
+
+-------------------------
+
+
+    " >> $INSTALL_PATH/install.info
+
+    # ============================
 }

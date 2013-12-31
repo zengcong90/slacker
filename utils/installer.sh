@@ -38,9 +38,8 @@ install_shell()
     fi
 }
 
-# install php extensions
-# install_php_extend $extend_name
-install_php_extend()
+# install_phpext $extend_name
+install_phpext()
 {
     if [ -d "$EXT_PWD/$1" ]; then
         if [ ! -s "$EXT_PWD/$1/install.lock" ]; then
@@ -51,14 +50,14 @@ install_php_extend()
                 cp -fr $EXT_PWD/$1/src/*.* $INSTALL_PATH/src/
             fi
             echo "Start install php extension $1..."
-            "install_$1" 2>&1 | tee -a $INSTALL_PATH/install.log
+            "install_ext_$1" 2>&1 | tee -a $INSTALL_PATH/install.log
             touch $EXT_PWD/$1/install.lock
         fi
     fi
 }
 
-# install_php_library $lib_name
-install_php_library()
+# install_phplib $lib_name
+install_phplib()
 {
     if [ -d "$LIB_PWD/$1" ]; then
         if [ ! -s "$LIB_PWD/$1/install.lock" ]; then
@@ -69,7 +68,7 @@ install_php_library()
                 cp -fr $LIB_PWD/$1/src/*.* $INSTALL_PATH/src/
             fi
             echo "Start install php library $1..."
-            "install_$1" 2>&1 | tee -a $INSTALL_PATH/install.log
+            "install_lib_$1" 2>&1 | tee -a $INSTALL_PATH/install.log
             touch $LIB_PWD/$1/install.lock
         fi
     fi
