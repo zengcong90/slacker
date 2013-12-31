@@ -75,7 +75,7 @@ postrotate
     [ -e /var/run/nginx.pid ] && kill -USR1 \`cat /var/run/nginx.pid\`
 endscript
 }
-    EOF
+EOF
 
     ldconfig
     service nginx start
