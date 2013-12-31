@@ -84,12 +84,14 @@ Created: `date`
         cd ../
 
         if [ -f "$MOD_PHP_INSTALL_PATH/lib/php/extensions/`ls $MOD_PHP_INSTALL_PATH/lib/php/extensions`/memcache.so" ];then
-            sed -i 's@^extension_dir\(.*\)@extension_dir\1\nextension = "memcache.so"@' $MOD_PHP_INSTALL_PATH/etc/php.ini
-            if [ $MOD_PHP_MODE == 'fpm' ] || [ ! $MOD_WEB == 'apache' ];then
-                service php-fpm restart
-            fi
-            if [ $MOD_WEB == 'apache' ];then
-                service httpd restart
+            if [ $EXT_MEMCACHED_ENABLE == 'y' ];then
+                sed -i 's@^extension_dir\(.*\)@extension_dir\1\nextension = "memcache.so"@' $MOD_PHP_INSTALL_PATH/etc/php.ini
+                if [ $MOD_PHP_MODE == 'fpm' ] || [ ! $MOD_WEB == 'apache' ];then
+                    service php-fpm restart
+                fi
+                if [ $MOD_WEB == 'apache' ];then
+                    service httpd restart
+                fi
             fi
         else
             echo -e "\033[31mPHP memcache module install failed, Please contact the author! \033[0m"
