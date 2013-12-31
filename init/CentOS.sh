@@ -10,22 +10,21 @@
 yum clean all
 
 # 163 Repo
-# mv /etc/yum.repos.d/CentOS-Base.repo $INSTALL_BACKUP_PATH/CentOS-Base.repo
+if [ $IS_163_REPOS == 'y' ];then
+    if [ ! -z "$(cat /etc/redhat-release | grep '6\.')" ];then
+        mv /etc/yum.repos.d/CentOS-Base.repo $INSTALL_BACKUP_PATH/CentOS-Base.repo
+        mv $IN_PWD/init/CentOS6-Base-163.rep /etc/yum.repos.d/CentOS-Base.repo
+        sed -i 's@\$releasever@6@g' /etc/yum.repos.d/CentOS-Base.repo
+        sed -i 's@gpgcheck=1@gpgcheck=0@g' /etc/yum.repos.d/CentOS-Base.repo
+    fi
 
-yum -y install wget
-# if [ ! -z "$(cat /etc/redhat-release | grep '6\.')" ];then
-#     wget -c --no-check-certificate http://mirrors.163.com/.help/CentOS6-Base-163.repo -P /etc/yum.repos.d
-#     mv /etc/yum.repos.d/CentOS6-Base-163.rep /etc/yum.repos.d/CentOS-Base.repo
-#     sed -i 's@\$releasever@6@g' /etc/yum.repos.d/CentOS-Base.repo
-#     sed -i 's@gpgcheck=1@gpgcheck=0@g' /etc/yum.repos.d/CentOS-Base.repo
-# fi
-
-# if [ ! -z "$(cat /etc/redhat-release | grep '5\.')" ];then
-#     wget -c --no-check-certificate http://mirrors.163.com/.help/CentOS5-Base-163.repo -P /etc/yum.repos.d
-#     mv /etc/yum.repos.d/CentOS5-Base-163.rep /etc/yum.repos.d/CentOS-Base.repo
-#     sed -i 's@\$releasever@5@g' /etc/yum.repos.d/CentOS-Base.repo
-#     sed -i 's@gpgcheck=1@gpgcheck=0@g' /etc/yum.repos.d/CentOS-Base.repo
-# fi
+    if [ ! -z "$(cat /etc/redhat-release | grep '5\.')" ];then
+        mv /etc/yum.repos.d/CentOS-Base.repo $INSTALL_BACKUP_PATH/CentOS-Base.repo
+        mv $IN_PWD/init/CentOS5-Base-163.rep /etc/yum.repos.d/CentOS-Base.repo
+        sed -i 's@\$releasever@5@g' /etc/yum.repos.d/CentOS-Base.repo
+        sed -i 's@gpgcheck=1@gpgcheck=0@g' /etc/yum.repos.d/CentOS-Base.repo
+    fi
+fi
 
 yum makecache
 
@@ -67,6 +66,8 @@ fi
 # Upgrade OS
 yum check-update
 [ "$IS_UPGRADE_OS" == 'y' ] && yum -y update
+
+yum -y install wget
 
 # Install needed packages
 yum -y install gcc \
