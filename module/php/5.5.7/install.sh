@@ -32,17 +32,8 @@ install_php()
     cd php-5.5.7
     make clean
 
-    WITH_MYSQL=''
-    if [ ! $MOD_DB == '' ];then
-        WITH_MYSQL=<<<EOF
-        --with-mysql=$MOD_DB_INSTALL_PATH \
-        --with-mysqli=$MOD_DB_INSTALL_PATH/bin/mysql_config \
-        --with-pdo-mysql=$MOD_DB_INSTALL_PATH/bin/mysql_config \
-        EOF
-    fi
-
     if [ $EXT_OPCACHE_INSTALL == 'y' ];then
-        $ENB_OPCACHE='--enable-opcache'
+        ENB_OPCACHE='--enable-opcache'
     fi
 
     if [ $MOD_WEB == 'apache' ]; then
@@ -87,7 +78,9 @@ install_php()
             --disable-rpath \
             --disable-ipv6 \
             --disable-debug \
-            $WITH_MYSQL
+            --with-mysql=$MOD_DB_INSTALL_PATH \
+            --with-mysqli=$MOD_DB_INSTALL_PATH/bin/mysql_config \
+            --with-pdo-mysql=$MOD_DB_INSTALL_PATH/bin/mysql_config \
             $ENB_OPCACHE
 
     else
@@ -135,7 +128,9 @@ install_php()
             --disable-rpath \
             --disable-ipv6 \
             --disable-debug \
-            $WITH_MYSQL
+            --with-mysql=$MOD_DB_INSTALL_PATH \
+            --with-mysqli=$MOD_DB_INSTALL_PATH/bin/mysql_config \
+            --with-pdo-mysql=$MOD_DB_INSTALL_PATH/bin/mysql_config \
             $ENB_OPCACHE
 
     fi
@@ -191,7 +186,7 @@ install_php()
         sed -i "s@^;env[TMP] = /tmp@env[TMP] = /tmp@" $MOD_PHP_INSTALL_PATH/etc/php-fpm.conf
         sed -i "s@^;env[TMPDIR] = /tmp@env[TMPDIR] = /tmp@" $MOD_PHP_INSTALL_PATH/etc/php-fpm.conf
         sed -i "s@^;env[TEMP] = /tmp@env[TEMP] = /tmp@" $MOD_PHP_INSTALL_PATH/etc/php-fpm.conf
-        service php-fpm start
+        [ -e "$MOD_PHP_INSTALL_PATH/var/run/php-fpm.pid" ] && service php-fpm reload || service php-fpm start
     fi
 
     if [ $MOD_WEB == 'apache' ];then

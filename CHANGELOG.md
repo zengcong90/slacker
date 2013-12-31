@@ -5,6 +5,7 @@ CHANGELOG
 v1.3.1 (2013-12-31)
 -----------------
 
+- 启用 Additional .ini 配置 PHP 扩展
 - 添加网易源的配置开关，默认为 y
 - 添加 Memcached 模块及 PHP 扩展安装
 - 添加 ImageMagick 模块及 PHP 扩展安装

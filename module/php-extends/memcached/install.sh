@@ -41,7 +41,7 @@ install_ext_memcached()
         cd ../
 
         if [ -f "$MOD_PHP_INSTALL_PATH/lib/php/extensions/`ls $MOD_PHP_INSTALL_PATH/lib/php/extensions`/memcached.so" ];then
-            sed -i 's@^extension_dir\(.*\)@extension_dir\1\nextension = "memcached.so"@' $MOD_PHP_INSTALL_PATH/etc/php.ini
+            cp $IN_PWD/module/php-extends/memcached/conf/memcached.ini $MOD_PHP_INSTALL_PATH/etc/conf.d/memcached.ini
             if [ $MOD_PHP_MODE == 'fpm' ] || [ ! $MOD_WEB == 'apache' ];then
                 service php-fpm restart
             fi
@@ -85,7 +85,7 @@ Created: `date`
 
         if [ -f "$MOD_PHP_INSTALL_PATH/lib/php/extensions/`ls $MOD_PHP_INSTALL_PATH/lib/php/extensions`/memcache.so" ];then
             if [ $EXT_MEMCACHED_ENABLE == 'y' ];then
-                sed -i 's@^extension_dir\(.*\)@extension_dir\1\nextension = "memcache.so"@' $MOD_PHP_INSTALL_PATH/etc/php.ini
+                cp $IN_PWD/module/php-extends/memcached/conf/memcache.ini $MOD_PHP_INSTALL_PATH/etc/conf.d/memcached.ini
                 if [ $MOD_PHP_MODE == 'fpm' ] || [ ! $MOD_WEB == 'apache' ];then
                     service php-fpm restart
                 fi

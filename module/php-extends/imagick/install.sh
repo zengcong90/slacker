@@ -38,7 +38,7 @@ install_ext_imagick()
 
     if [ -f "$MOD_PHP_INSTALL_PATH/lib/php/extensions/`ls $MOD_PHP_INSTALL_PATH/lib/php/extensions`/imagick.so" ];then
         if [ $EXT_IMAGICK_ENABLE == 'y' ];then
-            sed -i 's@^extension_dir\(.*\)@extension_dir\1\nextension = "imagick.so"@' $MOD_PHP_INSTALL_PATH/etc/php.ini
+            cp $IN_PWD/module/php-extends/imagick/conf/imagick.ini $MOD_PHP_INSTALL_PATH/etc/conf.d/imagick.ini
             if [ $MOD_PHP_MODE == 'fpm' ] || [ ! $MOD_WEB == 'apache' ];then
                 service php-fpm restart
             fi
