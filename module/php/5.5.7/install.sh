@@ -49,6 +49,7 @@ install_php()
         CFLAGS= CXXFLAGS= ./configure \
             --prefix=$MOD_PHP_INSTALL_PATH \
             --with-config-file-path=$MOD_PHP_INSTALL_PATH/etc \
+            --with-config-file-scan-dir=$MOD_PHP_INSTALL_PATH/etc/conf.d \
             --with-apxs2=$MOD_WEB_INSTALL_PATH/bin/apxs \
             --with-iconv-dir=/usr/local \
             --with-freetype-dir \
@@ -57,30 +58,30 @@ install_php()
             --with-zlib \
             --with-libxml-dir=/usr \
             --with-curl \
-            --with-kerberos \
             --with-mcrypt \
+            --with-mhash \
+            --with-openssl \
+            --with-kerberos \
             --with-gd \
             --with-xsl \
-            --with-openssl \
-            --with-mhash \
-            --with-ldap \
-            --with-ldap-sasl \
             --with-xmlrpc \
             --with-gettext \
+            --with-ldap \
+            --with-ldap-sasl \
+            --enable-inline-optimization \
+            --enable-pcntl \
+            --enable-mbregex \
+            --enable-wddx \
+            --enable-shmop \
+            --enable-soap \
             --enable-xml \
             --enable-bcmath \
-            --enable-shmop \
             --enable-exif \
             --enable-sysvsem \
-            --enable-inline-optimization \
-            --enable-mbregex \
             --enable-mbstring \
             --enable-gd-native-ttf \
-            --enable-pcntl \
             --enable-sockets \
-            --enable-ftp \
             --enable-zip \
-            --enable-soap \
             --enable-maintainer-zts \
             --disable-fileinfo \
             --disable-rpath \
@@ -93,8 +94,7 @@ install_php()
         CFLAGS= CXXFLAGS= ./configure \
             --prefix=$MOD_PHP_INSTALL_PATH \
             --with-config-file-path=$MOD_PHP_INSTALL_PATH/etc \
-            --with-fpm-user=www \
-            --with-fpm-group=www \
+            --with-config-file-scan-dir=$MOD_PHP_INSTALL_PATH/etc/conf.d \
             --with-iconv-dir=/usr/local \
             --with-freetype-dir \
             --with-jpeg-dir \
@@ -102,30 +102,34 @@ install_php()
             --with-zlib \
             --with-libxml-dir=/usr \
             --with-curl \
-            --with-kerberos \
             --with-mcrypt \
+            --with-mhash \
+            --with-openssl \
+            --with-kerberos \
             --with-gd \
             --with-xsl \
-            --with-openssl \
-            --with-mhash \
-            --with-ldap \
-            --with-ldap-sasl \
             --with-xmlrpc \
             --with-gettext \
+            --with-ldap \
+            --with-ldap-sasl \
+            --with-fpm-user=www \
+            --with-fpm-group=www \
             --enable-fpm \
+            --enable-fastCGI \
+            --enable-inline-optimization \
+            --enable-pcntl \
+            --enable-mbregex \
+            --enable-wddx \
+            --enable-shmop \
+            --enable-soap \
             --enable-xml \
             --enable-bcmath \
-            --enable-shmop \
             --enable-exif \
             --enable-sysvsem \
-            --enable-inline-optimization \
-            --enable-mbregex \
             --enable-mbstring \
             --enable-gd-native-ttf \
-            --enable-pcntl \
             --enable-sockets \
             --enable-zip \
-            --enable-soap \
             --enable-maintainer-zts \
             --disable-fileinfo \
             --disable-rpath \
@@ -196,7 +200,6 @@ install_php()
         sed -i "s@AddType\(.*\)Z@AddType\1Z\n    AddType application/x-httpd-php .php .phtml\n    AddType application/x-httpd-php-source .phps@" $MOD_WEB_INSTALL_PATH/conf/httpd.conf
         sed -i 's@DirectoryIndex index.html@DirectoryIndex index.html index.htm index.php@' $MOD_WEB_INSTALL_PATH/conf/httpd.conf
         sed -i "s@^#Include conf/extra/httpd-mpm.conf@Include conf/extra/httpd-mpm.conf@" $MOD_WEB_INSTALL_PATH/conf/httpd.conf
-
         service httpd restart
     fi
 
@@ -211,6 +214,8 @@ PHP Version: $MOD_PHP_VER
 PHP Mode: $MOD_PHP_MODE
 
 PHP Install Path: $MOD_PHP_INSTALL_PATH
+PHP Config File: $MOD_PHP_INSTALL_PATH/etc/php.ini
+PHP Config File Scan Dir: $MOD_PHP_INSTALL_PATH/etc/conf.d
 PHP Log Path: $MOD_PHP_LOG_PATH
 
 Usage: service php-fpm {start|stop|force-quit|restart|reload|status}
