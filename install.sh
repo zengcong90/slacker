@@ -1,6 +1,6 @@
 #!/bin/bash
-# Author:  Allen <movoin@gmail.com>
-# Website:  http://movoin.com
+# Author:  zengcong
+# Website:  http://www.zsxhkj.com
 #
 # Notes: LNMP for CentOS/RadHat 5+
 #
@@ -25,8 +25,8 @@ if [ -f /etc/redhat-release ];then
     printf "
 ################################################################################
                              SLACKER V$SLACKER_VERSION
-             AUTHOR: Allen <movoin@gmail.com> UPDATE: $SLACKER_UPDATED
-                         - WEBSITE: http://movoin.com -
+             AUTHOR: zengcong  UPDATE: $SLACKER_UPDATED
+                         - WEBSITE: http://www.zsxhkj.com -
 ################################################################################
 
 "
@@ -61,69 +61,47 @@ if [ "$IS_GCC_SANE" == 'y' ];then
 fi
 
 
-# Database
-if [ ! $MOD_DB == '' ] && [ ! $MOD_DB_VER == '' ];then
-    install_mod $MOD_DB $MOD_DB_VER
+# jdk
+if [ ! $MOD_JDK == '' ] && [ ! $MOD_JDK_VER == '' ];then
+    install_mod $MOD_JDK  $MOD_JDK_VER
+fi
+# maven
+if [ ! $MOD_MAVEN == '' ] && [ ! $MOD_MAVEN_VER == '' ];then
+    install_mod $MOD_MAVEN  $MOD_MAVEN_VER
+fi
+# mysql
+if [ ! $MOD_MYSQL == '' ] && [ ! $MOD_MYSQL_VER == '' ];then
+    install_mod $MOD_MYSQL  $MOD_MYSQL_VER
+fi
+# zookeeper
+if [ ! $MOD_ZOOKEEPER == '' ] && [ ! $MOD_ZOOKEEPER_VER == '' ];then
+    install_mod $MOD_ZOOKEEPER  $MOD_ZOOKEEPER_VER
+fi
+# tocmat
+if [ ! $MOD_TOMCAT == '' ] && [ ! $MOD_TOMCAT_VER == '' ];then
+    install_mod $MOD_TOMCAT  $MOD_TOMCAT_VER
+fi
+# redis
+if [ ! $MOD_REDIS == '' ] && [ ! $MOD_REDIS_VER == '' ];then
+    install_mod $MOD_REDIS  $MOD_REDIS_VER
 fi
 
-
-# Web Server
-if [ ! $MOD_WEB == '' ] && [ ! $MOD_WEB_VER == '' ];then
-    install_mod $MOD_WEB $MOD_WEB_VER
+# mongodb
+if [ ! $MOD_MONGODB == '' ] && [ ! $MOD_MONGODB_VER == '' ];then
+    install_mod $MOD_MONGODB  $MOD_MONGODB_VER
+fi
+# erlang
+if [ ! $MOD_ERLANG == '' ] && [ ! $MOD_ERLANG_VER == '' ];then
+    install_mod $MOD_ERLANG  $MOD_ERLANG_VER
+fi
+# rabbitmq
+if [ ! $MOD_RABBITMQ == '' ] && [ ! $MOD_RABBITMQ_VER == '' ];then
+    install_mod $MOD_RABBITMQ  $MOD_RABBITMQ_VER
 fi
 
-
-# PHP
-if [ ! $MOD_PHP == '' ] && [ ! $MOD_PHP_VER == '' ];then
-    install_mod $MOD_PHP $MOD_PHP_VER
-fi
-
-
-# Memcached Server
-if [ ! $MOD_MEMCACHED == '' ] && [ ! $MOD_MEMCACHED_VER == '' ];then
-    install_mod $MOD_MEMCACHED $MOD_MEMCACHED_VER
-fi
-
-
-# PHP Extensions
-
-# - imagick
-if [ $EXT_IMAGICK_INSTALL == 'y' ];then
-    install_phpext 'imagick'
-fi
-
-# - memcached
-if [ $EXT_MEMCACHED_INSTALL == 'y' ];then
-    install_phpext 'memcached'
-fi
-
-# - hidef
-if [ $EXT_HIDEF_INSTALL == 'y' ];then
-    install_phpext 'hidef'
-fi
-
-# - pecl_http
-if [ $EXT_PECL_HTTP_INSTALL == 'y' ];then
-    install_phpext 'pecl_http'
-fi
-
-# - xdebug
-if [ $EXT_XDEBUG_INSTALL == 'y' ];then
-    install_phpext 'xdebug'
-fi
-
-# - pthreads
-if [ $EXT_PTHREADS_INSTALL == 'y' ];then
-    install_phpext 'pthreads'
-fi
-
-
-# PHP Libraries
-if [ $LIB_PHPMYADMIN_INSTALL == 'y' ];then
-    install_phplib 'phpmyadmin'
-fi
-
-# Show Install Success Infomations
+source /etc/profile
+echo "source /etc/profile Success"
+# Show Install Success Infomation
 cat $INSTALL_PATH/install.info
 
 # Reboot OS
