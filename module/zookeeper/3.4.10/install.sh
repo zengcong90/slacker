@@ -28,6 +28,9 @@ install_zookeeper()
        mv $MOD_ZOOKEEPER_INSTALL_PATH/conf/zoo_sample.cfg $MOD_ZOOKEEPER_INSTALL_PATH/conf/zoo.cfg
        sed -i "s@^dataDir=/tmp/zookeeper@dataDir=$MOD_ZOOKEEPER_INSTALL_PATH/data@"  $MOD_ZOOKEEPER_INSTALL_PATH/conf/zoo.cfg
     fi
+    if [  -f "$MOD_ZOOKEEPER_INSTALL_PATH/bin/zkEnv.sh" ];then
+       sed -i "s@^ export JAVA_HOME=@ export JAVA_HOME=/opt/slacker/bin/jdk@"  $MOD_ZOOKEEPER_INSTALL_PATH/bin/zkEnv.sh
+    fi
     ZKS=/usr/lib/systemd/system/zookeeper.service
     if [ ! -f "$ZKS" ]; then
     sed -i "s@^# a sibling of this script's directory@# a sibling of this script's directory\\n export JAVA_HOME=$JAVA_HOME@" $MOD_ZOOKEEPER_INSTALL_PATH/bin/zkEnv.sh
@@ -35,10 +38,13 @@ install_zookeeper()
         echo  "[Unit]" >> $ZKS
         echo  "Description=zookeeper" >> $ZKS
         echo  "After=network.target remote-fs.target nss-lookup.target" >> $ZKS
-        echo  "[Service]" >> $ZKS  
-        echo  "Type=forking" >> $ZKS  
-        echo  "ExecStart=/opt/slacker/bin/zookeeper/bin/zkServer.sh start" >> $ZKS 
-        echo  "ExecReload=/opt/slacker/bin/zookeeper/bin/zkServer.sh restart" >> $ZKS 
+        echo  "ConditionPathExists=/opt/slacker/bin/zookeeper/conf/zoo.cfg" >> $ZKS
+        echo  "[Service]" >> $ZKS
+        echo  "Type=forking" >> $ZKS
+        echo  "User=root" >> $ZKS
+        echo  "Group=root" >> $ZKS
+        echo  "ExecStart=/opt/slacker/bin/zookeeper/bin/zkServer.sh start" >> $ZKS
+        echo  "ExecReload=/opt/slacker/bin/zookeeper/bin/zkServer.sh restart" >> $ZKS
         echo  "ExecStop=/opt/slacker/bin/zookeeper/bin/zkServer.sh stop" >> $ZKS 
         echo  "[Install]" >> $ZKS 
         echo  "WantedBy=multi-user.target" >> $ZKS     

@@ -61,6 +61,8 @@ install_mongodb()
   mongod -f /etc/mongodb.conf
 #创建账号
   mongo localhost:27017/admin --eval "printjson(db.createUser({user: \"root\", pwd: \"123456\", roles: [{role: \"root\", db: \"admin\"}]}))"
+#  mongo localhost:27017/admin --eval "printjson(db.adminCommand( { \"setParameter\": 1, \"wiredTigerEngineRuntimeConfig\": \"cache_size=4G\"}))"
+#  mongo localhost:27017/admin --eval "printjson(db.serverStatus().wiredTiger.cache['maximum bytes configured']/4096/4096/4096))"
   echo "---------mongodb create user  success!!!---------"
 #创建mongodb systemctl启动文件  
     MGF=/usr/lib/systemd/system/mongodb.service
